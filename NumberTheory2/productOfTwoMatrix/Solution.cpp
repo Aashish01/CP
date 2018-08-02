@@ -43,7 +43,6 @@ int main(){
 		}
 	}
 	int ** r= productOfTwoMatrices(p,m,k,q,x,n);
-	cout<<k<<" "<<x<<"\n";
 	if(r==0){
 		cout<<"Not possible"<<"\n";
 	}else{
@@ -54,6 +53,16 @@ int main(){
 		cout<<"\n";
 	}
 	}
+	for (int i=0;i<m;i++){
+		delete [] p[i];
+	}
+	delete [] p;
+
+	for(int i=0;i<x;i++){
+		delete [] q[i];
+	}
+	delete [] q;
+	delete [] r;
 	
 
 }
