@@ -62,7 +62,9 @@ int main(){
 		delete [] q[i];
 	}
 	delete [] q;
+	for(int i=0;i<m;i++){
+		delete [] r[i];
+	}
 	delete [] r;
-	
 
 }
