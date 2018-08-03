@@ -47,6 +47,7 @@ void matrixExponent(int** p, int m,int n){
 		delete [] r;
 
 		matrixExponent(p,m,n/2);
+		return;
 	}
 	int** temp = new int*[m];
 	for(int i=0;i<m;i++){
@@ -92,6 +93,7 @@ void matrixExponent(int** p, int m,int n){
 		delete [] temp[i];
 	}
 	delete [] temp;
+	return;
 }
 int main(){
 	ios_base:: sync_with_stdio(false);
