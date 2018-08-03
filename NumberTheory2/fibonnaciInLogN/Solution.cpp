@@ -95,16 +95,12 @@ void matrixExponent(int** p, int m,int n){
 	delete [] temp;
 	return;
 }
-int main(){
-	int n;
-	cin>>n;
+long long int fibonacci(int n){
 	if(n==0){
-		 cout<<0<<"\n";
 		 return 0;
 	}
 	if(n==1){
-		cout<<1<<"\n";
-		return 0;
+		return 1;
 	}
 	int** p= new int*[2];
 	for(int i=0;i<2;i++){
@@ -130,7 +126,7 @@ int main(){
 		}
 	}
 	multiplyMatrix(p,2,2,q,1,r);
-	cout<<r[0][0]<<"\n";
+	long long int ans=r[0][0];
 	for(int i=0;i<2;i++){
 		delete [] p[i];
 		delete [] q[i];
@@ -139,6 +135,15 @@ int main(){
 	delete [] p;
 	delete [] q;
 	delete [] r;
+	return ans;
+}
+int main(){
+	ios_base:: sync_with_stdio(false);
+	cin.tie(NULL);
+	int n;
+	cin>>n;
+	long long int ans= fibonacci(n);
+	cout<<ans<<"\n";
 	return 0;
 
 }
