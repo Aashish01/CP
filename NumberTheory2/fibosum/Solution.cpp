@@ -96,7 +96,7 @@ void matrixExponent(int** p, int m,int n){
 	delete [] temp;
 	return;
 }
-unsigned long long fibonacci(unsigned long long n){
+long long int fibonacci(long long int n){
 	if(n==0){
 		 return 0;
 	}
@@ -138,34 +138,16 @@ unsigned long long fibonacci(unsigned long long n){
 	delete [] r;
 	return ans;
 }
-unsigned long long fiboSum(unsigned long long n, unsigned long long m){
-	int mo = (int)pow(10,9)+7;
-	if(n==m){
-		return fibonacci(n);
-	}
-	if(m==(n+1)){
-		return (fibonacci(n)%mo+fibonacci(n+1)%mo)%mo;
-	}
-	int* p= new int[m-n+1];
-	p[0]= fibonacci(n);
-	p[1]=fibonacci(n+1);
-	for(int i=2;i<m-n+1;i++){
-		p[i]=p[i-1]+p[i-2];
-	} 
-	unsigned long long sum= 0;
-	for(int i=0;i<m-n+1;i++){
-		sum=(sum%mo + p[i]%mo)%mo;
-	}
-	delete [] p;
-	return sum;
-}
 int main(){
 	ios_base:: sync_with_stdio(false);
 	cin.tie(NULL);
-	unsigned long long n,m;
-	cin>>n>>m;
-	 unsigned long long ans= fiboSum(n,m);
-	cout<<ans<<"\n";
+	int mo =(int)pow(10,9)+7;
+	int m, n;
+	cin>>m>>n;
+	long long int ans1= fibonacci(m+1);
+	long long int ans2= fibonacci(n+2);
+	long long int fibsum= (ans2%mo-ans1%mo)%mo;
+	cout<<fibsum<<"\n";
 	return 0;
-}
 
+}
