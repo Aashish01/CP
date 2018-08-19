@@ -8,10 +8,9 @@ public:
 	int y;
 };
 Triplet extendedEuclid(int a,int b){
-	if(a<b){
-		Triplet t= extendedEuclid(b,a);
-		return t;
-	}
+	// if(a<b){
+	// 	Not valid ans.
+	// }
 	if(b==0){
 		Triplet t;
 		t.gcd=a;
@@ -30,11 +29,23 @@ Triplet extendedEuclid(int a,int b){
 int main(){
 	int a, m;
 	cin>>a>>m;
+	if(a<m){
+		cout<<"Extended extendedEuclid will not work."<<endl;
+		return 0;
+	}
 Triplet t= extendedEuclid(a,m);
+if(t.gcd!=1){
+	cout<<"Mod Inverse doesnot exists"<<"\n";
+	return 0;
+}
 if(t.gcd==1){
-	cout<<"Multiplicative Modulo Inverse Exists"<<" "<<t.x<<"\n";
-}else{
-	cout<<"Don't exists"<<"\n";
+	int c;
+	if(t.x<0){
+      c= ((t.x)%m + m)%m;
+	}else{
+		c=t.x;
+	}
+	cout<<"Multiplicative Modulo Inverse Exists"<<" "<<c<<"\n";
 }
 return 0;
 }
