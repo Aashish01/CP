@@ -1,3 +1,4 @@
+//Fermits theorem to find mod inverse or modulo mod inverse or multiplicative modulo mod inverse.
 #include <iostream>
 using namespace std;
 long long int largePower(long long int a, long long int b, int m){
