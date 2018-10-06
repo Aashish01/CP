@@ -29,55 +29,48 @@ void printPrimes(long long int l, long long int r){
 		    }
 		}
 	}
-	for(int i=0;i<100001;i++){
-		if(sieve[i]){
-			cout<<i<<" ";
-		}
-	}
-	cout<<endl;
-
-	
 	bool * arr= new bool[r-l+1];
-	for(int i=0;i<r-l;i++){
+	for(int i=0;i<(r-l+1);i++){
 		arr[i]=true;
 	}
 	for(int i=2;i<100001;i++){
+		int maxR= (int) pow(r,0.5);
+		if(i>maxR){
+			break;
+		}
 		if(sieve[i]){
-			if(l%i==0){
-				if((l/i)<i){
-					for(int j=i;i*j<=r;j++){
-						arr[i*j-l]=false;
-					}
-				}else{
-					int x=l/i;
-					for(int j=x;i*j<=r;j++){
-						arr[i*j-l]=false;
-					}
+			int no=i;
+			if(l<=no){
+				for(int j=i;(i*j)<=r;j++){
+					arr[(i*j)-l]=false;
 				}
 			}else{
-				int y=l/i+1;
-				if(y<i){
+				int nextBase;
+				if(l%no==0){
+					nextBase=l/no;
+				}else{
+					nextBase=(l/no) +1;
+				}
+				if(nextBase<=no){
 					for(int j=i;i*j<=r;j++){
-						arr[i*j-l]=false;
+						arr[(i*j)-l]=false;
 					}
 				}else{
-					int x=y;
-					for(int j=x;i*j<=r;j++){
-						arr[i*j-l]=false;
+					for(int j= nextBase;i*j<=r;j++){
+						arr[(i*j)-l]=false;
 					}
 				}
 			}
 		}
 	}
-	for(int i=0;i<r-l;i++){
+	for(int i=0;i<(r-l+1);i++){
 		if(arr[i]){
-			cout<<i+l<<" ";
+			cout<<l+i<<" ";
 		}
 	}
 	cout<<"\n";
 	delete [] arr;
 	return;
-
 }
 int main(){
 	ios_base::sync_with_stdio(false);
