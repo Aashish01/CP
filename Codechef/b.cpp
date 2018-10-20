@@ -56,7 +56,19 @@ void print(int n){
 		cout<<"\n";
 	}else{
 		cout<<"1"<<"\n";
-		arr[n-1]=29;
+		bool hold=true;
+		for(int i=0;i<n;i++){
+			if(arr[i]!=47){
+				hold=false;
+				break;
+			}
+		}
+		if(hold==false){
+			arr[n-1]=47;
+		}else{
+			arr[n-1]=29;
+		}
+		
 		for(int i=0;i<n;i++){
 			cout<<arr[i]<<" ";
 		}
