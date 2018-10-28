@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include <math.h>
 #include <utility>
 using namespace std;
 void buildTree(int * arr, pair<int,int> * p, int start, int end, int index){
@@ -10,15 +11,14 @@ void buildTree(int * arr, pair<int,int> * p, int start, int end, int index){
 	int mid=(start+end)/2;
 	buildTree(arr,p,start,mid,2*index);
 	buildTree(arr,p,mid+1,end,2*index+1);
-	int * temp= new int[4];
-	temp[0]=p[2*index].first;
-	temp[1]=p[2*index].second;
-	temp[2]=p[2*index+1].first;
-	temp[3]=p[2*index+1].second;
-	sort(temp,temp+4);
-	p[index].first=temp[2];
-	p[index].second=temp[3];
-	delete [] temp;
+	p[index].first= max(p[2*index].first ,p[2*index+1].first);
+	if(p[index].first==p[2*index].first){
+      p[index].second=max(p[2*index+1].first,p[2*index].second);
+	}else{
+		p[index].second=max(p[2*index].first,p[2*index+1].second);
+		
+	}
+
 	return;
 }
 pair<int,int> query(pair<int,int> * p, int start, int end, int l, int r, int index){
@@ -33,14 +33,15 @@ pair<int,int> query(pair<int,int> * p, int start, int end, int l, int r, int ind
 	int mid = (start+end)/2;
 	pair<int,int> q1= query(p,start,mid,l,r,2*index);
 	pair<int,int> q2= query(p,mid+1,end,l,r,2*index+1);
-	int * temp = new int[4];
-	temp[0]=q1.first;
-	temp[1]=q1.second;
-	temp[2]=q2.first;
-	temp[3]=q2.second;
-	sort(temp,temp+4);
-	pair<int,int> q(temp[2],temp[3]);
-	delete [] temp;
+
+	int fMax= max(q1.first,q2.first);
+	int sMax;
+	if(fMax==q1.first){
+		sMax=max(q2.first,q1.second);
+	}else{
+		sMax= max(q1.first,q2.second);
+	}
+	pair<int,int> q(fMax,sMax);
 	return q;
 }
 void update(pair<int,int> * p, int start, int end,int index,int gAindex,int value){
@@ -55,15 +56,14 @@ void update(pair<int,int> * p, int start, int end,int index,int gAindex,int valu
 	if(gAindex>mid){
 		update(p,mid+1,end,2*index+1,gAindex,value);
 	}
-	int * temp= new int[4];
-	temp[0]=p[2*index].first;
-	temp[1]=p[2*index].second;
-	temp[2]=p[2*index+1].first;
-	temp[3]=p[2*index+1].second;
-	sort(temp,temp+4);
-	p[index].first=temp[2];
-	p[index].second=temp[3];
-	delete [] temp;
+
+	p[index].first= max(p[2*index].first ,p[2*index+1].first);
+	if(p[index].first==p[2*index].first){
+      p[index].second=max(p[2*index+1].first,p[2*index].second);
+	}else{
+		p[index].second=max(p[2*index].first,p[2*index+1].second);
+
+	}
 	return;
 }
 int main(){
