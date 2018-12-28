@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 using namespace std;
 struct Node{
 	char type;
@@ -227,10 +228,17 @@ int main(){
 	cout.tie(NULL);
 	int n;
 	cin>>n;
+  string str;
+  cin>>str;
 	int * arr= new int[n];
 	Node * p= new Node[4*n];
 	for(int i=0;i<n;i++){
-		cin>>arr[i];
+		char ini=str.at(i);
+    if(ini=='1'){
+       arr[i]=1;
+    }else{
+      arr[i]=0;
+    }
 	}
 	buildSegmentTree(p,arr,0,n-1,1);
 	int m;
