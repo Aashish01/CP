@@ -20,10 +20,18 @@ void update(long long int *p,long long int * lazy, int start, int end , int l, i
 		long long int y=lazy[index];
 			lazy[index]=0;
 			if(start!=end){
-				lazy[2*index]+=y;
-				lazy[2*index+1]+=y;
+				int mi=(start+end)/2;
+				double mid=mi*1.0;
+				double size1= (mid-start+1)/(end-start+1);
+				double size2= (end-mid)/(end-start+1);
+                size1=size1*y;
+                size2=size2*y;
+
+				lazy[2*index]+=(long long int)size1;
+				lazy[2*index+1]+=(long long int)size1;
 
 			}
+			
 			p[index]+=y;
 			// cout<<"Settle the new value  "<<p[index]<<endl;
 		}
@@ -41,12 +49,19 @@ void update(long long int *p,long long int * lazy, int start, int end , int l, i
 		// 	p[index]+=y;
 		// 	cout<<"Settle the new value  "<<p[index]<<endl;
 		// }
-		p[index]+=x;
+		p[index]+= x*(end-start+1);
 		// cout<<"new value "<<p[index]<<endl;
 
 		if(start!=end){
-			lazy[2*index]+=x;
-			lazy[2*index+1]+=x;
+			int mi=(start+end)/2;
+				double mid=mi*1.0;
+				double size1= (mid-start+1);
+				double size2= (end-mid);
+                size1=size1*x;
+                size2=size2*x;
+
+				lazy[2*index]+=(long long int)size1;
+				lazy[2*index+1]+=(long long int)size1;
 		}
 		return;
 	}else{
@@ -54,21 +69,29 @@ void update(long long int *p,long long int * lazy, int start, int end , int l, i
 		update(p,lazy,start,mid,l,r,x,2*index);
 		update(p,lazy,mid+1,end,l,r,x,2*index+1);
 		p[index]=p[2*index]+p[2*index+1];
-
 		return;
 	}
 }
-long long int query(long long int * p,long long int * lazy, int start, int end, int l, int r, int index){
+int query(long long int * p,long long int * lazy, int start, int end, int l, int r, int index){
 	if(lazy[index]!=0){
-		long long	int y=lazy[index];
+		long long int y=lazy[index];
 			lazy[index]=0;
+			if(start!=end){
+				int mi=(start+end)/2;
+				double mid=mi*1.0;
+				double size1= (mid-start+1)/(end-start+1);
+				double size2= (end-mid)/(end-start+1);
+                size1=size1*y;
+                size2=size2*y;
 
-		if(start!=end){
-			lazy[2*index]+=y;
-			lazy[2*index+1]+=y;
+				lazy[2*index]+=(long long int)size1;
+				lazy[2*index+1]+=(long long int)size1;
+
+			}
+			
+			p[index]+=y;
+			// cout<<"Settle the new value  "<<p[index]<<endl;
 		}
-		p[index]+=y;
-      }
 	if(start>r || end <l){
 		return 0;
 	}else if(start >=l && end <=r){
@@ -86,12 +109,12 @@ long long int query(long long int * p,long long int * lazy, int start, int end, 
      }else{
 		int mid=(start+end)/2;
 		long long int a= query(p,lazy,start,mid,l,r,2*index);
-		long long int b= query(p,lazy,mid+1,end,l,r,2*index+1);
+	long long	int b= query(p,lazy,mid+1,end,l,r,2*index+1);
 		p[index]=a+b;
 		return p[index];
 	}
 }
-void printTree(int *p ,int * lazy, int start, int end, int index){
+void printTree(long long int *p ,long long int * lazy, int start, int end, int index){
 	cout<<index<<" "<<p[index]<<" "<<lazy[index]<<endl;
 	if(start==end){
 		return;
@@ -129,6 +152,7 @@ int main(){
 			l--;
 			r--;
 			update(p,lazy,0,n-1,l,r,x,1);
+			
 		}else{
 			int l,r;
 			cin>>l>>r;
