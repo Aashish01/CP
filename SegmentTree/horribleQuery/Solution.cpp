@@ -16,103 +16,68 @@ void buildSegmentTree(long long int *p, int * arr, int start, int end, int index
 	return;
 }
 void update(long long int *p,long long int * lazy, int start, int end , int l, int r,int x, int index){
-	if(lazy[index]!=0){
+  	if(lazy[index]!=0){
 		long long int y=lazy[index];
 			lazy[index]=0;
 			if(start!=end){
-				int mi=(start+end)/2;
-				double mid=mi*1.0;
-				double size1= (mid-start+1)/(end-start+1);
-				double size2= (end-mid)/(end-start+1);
-                size1=size1*y;
-                size2=size2*y;
+				
 
-				lazy[2*index]+=(long long int)size1;
-				lazy[2*index+1]+=(long long int)size1;
+				lazy[2*index]+=(long long int)y;
+				lazy[2*index+1]+=(long long int)y;
 
 			}
 			
-			p[index]+=y;
-			// cout<<"Settle the new value  "<<p[index]<<endl;
+			p[index]+=y*(end-start+1);
 		}
-	if(start>r || end <l){
+	if(start>r || end <l || start>end){
 		return;
-	}else if(start >=l && end <=r){
-		// if(lazy[index]!=0){
-		// 	int y=lazy[index];
-		// 	lazy[index]=0;
-		// 	if(start!=end){
-		// 		lazy[2*index]+=y;
-		// 		lazy[2*index+1]+=y;
+	}
 
-		// 	}
-		// 	p[index]+=y;
-		// 	cout<<"Settle the new value  "<<p[index]<<endl;
-		// }
+  if(start >=l && end <=r){
+
 		p[index]+= x*(end-start+1);
-		// cout<<"new value "<<p[index]<<endl;
-
 		if(start!=end){
-			int mi=(start+end)/2;
-				double mid=mi*1.0;
-				double size1= (mid-start+1);
-				double size2= (end-mid);
-                size1=size1*x;
-                size2=size2*x;
+			
 
-				lazy[2*index]+=(long long int)size1;
-				lazy[2*index+1]+=(long long int)size1;
+				lazy[2*index]+=x;
+				lazy[2*index+1]+=x;
 		}
 		return;
-	}else{
+	}
 		int mid=(start+end)/2;
 		update(p,lazy,start,mid,l,r,x,2*index);
 		update(p,lazy,mid+1,end,l,r,x,2*index+1);
 		p[index]=p[2*index]+p[2*index+1];
 		return;
-	}
+	
 }
 int query(long long int * p,long long int * lazy, int start, int end, int l, int r, int index){
-	if(lazy[index]!=0){
+if(start>r || end <l){
+		return 0;
+	}
+  if(lazy[index]!=0){
 		long long int y=lazy[index];
 			lazy[index]=0;
 			if(start!=end){
-				int mi=(start+end)/2;
-				double mid=mi*1.0;
-				double size1= (mid-start+1)/(end-start+1);
-				double size2= (end-mid)/(end-start+1);
-                size1=size1*y;
-                size2=size2*y;
+				
 
-				lazy[2*index]+=(long long int)size1;
-				lazy[2*index+1]+=(long long int)size1;
+				lazy[2*index]+=(long long int)y;
+				lazy[2*index+1]+=(long long int)y;
 
 			}
 			
-			p[index]+=y;
-			// cout<<"Settle the new value  "<<p[index]<<endl;
+			p[index]+=y*(end-start+1);
 		}
-	if(start>r || end <l){
-		return 0;
-	}else if(start >=l && end <=r){
-	// if(lazy[index]!=0){
-	// 		int y=lazy[index];
-	// 		lazy[index]=0;
-
-	// 	if(start!=end){
-	// 		lazy[2*index]+=y;
-	// 		lazy[2*index+1]+=y;
-	// 	}
-	// 	p[index]+=y;
- //      }
+	
+  	
+  if(start >=l && end <=r){
 		return p[index];
-     }else{
+     }
 		int mid=(start+end)/2;
 		long long int a= query(p,lazy,start,mid,l,r,2*index);
 	long long	int b= query(p,lazy,mid+1,end,l,r,2*index+1);
-		p[index]=a+b;
-		return p[index];
-	}
+		return a+b;
+	
 }
 void printTree(long long int *p ,long long int * lazy, int start, int end, int index){
 	cout<<index<<" "<<p[index]<<" "<<lazy[index]<<endl;
@@ -138,9 +103,6 @@ int main(){
 		arr[i]=0;
 	}
 	buildSegmentTree(p,arr,0,n-1,1,lazy);
-	// cout<<"Tree"<<endl;
-	// printTree(p,lazy,0,n-1,1);
-
 	int m;
 	cin>>m;
 	for(int i=0;i<m;i++){
@@ -160,10 +122,6 @@ int main(){
 			r--;
 			cout<<query(p,lazy,0,n-1,l,r,1)<<endl;
 		}
-		// cout<<"Tree"<<endl;
-
-		// printTree(p,lazy,0,n-1,1);
-
 	}
 	delete [] arr;
 	delete [] p;
